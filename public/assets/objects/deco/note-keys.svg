@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs><linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe1e6"/><stop offset="1" stop-color="#f7c3cd"/></linearGradient></defs>
+  <path d="M4 4 H196 V168 L168 196 H4 Z" fill="url(#p)"/>
+  <path d="M196 168 L168 196 L173 173 Z" fill="#f2b3bf"/>
+  <path d="M26 82 H174 M26 126 H174" stroke="#efb2bd" stroke-width="2"/>
+  <text x="100" y="74" font-family="'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif" font-size="32" font-weight="800" text-anchor="middle" fill="#8a3c4a">出門記得</text>
+  <text x="100" y="118" font-family="'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif" font-size="32" font-weight="800" text-anchor="middle" fill="#8a3c4a">帶鑰匙！</text>
+  <text x="100" y="166" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="22" text-anchor="middle" fill="#a8586a">還有手機 ♡</text>
+</svg>

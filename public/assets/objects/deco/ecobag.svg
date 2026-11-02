@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="270" viewBox="0 0 200 270">
+  <defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efe4cf"/><stop offset="1" stop-color="#d9caad"/></linearGradient></defs>
+  <path d="M100 6 L52 96 M100 6 L148 96" stroke="#cdbb98" stroke-width="12" stroke-linecap="round"/>
+  <path d="M100 6 L52 96 M100 6 L148 96" stroke="#e3d5b8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M30 92 H170 L178 262 Q178 268 172 268 H28 Q22 268 22 262 Z" fill="url(#c)"/>
+  <path d="M30 92 H170 L171 104 H29 Z" fill="#cdbb98" opacity=".6"/>
+  <path d="M60 130 Q100 112 140 130" fill="none" stroke="#a88d5f" stroke-width="2" opacity=".5"/>
+  <text x="100" y="186" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-style="italic" text-anchor="middle" fill="#6b5444">Smooch Home</text>
+  <path d="M84 206 q16 -14 32 0 q-16 14 -32 0z" fill="#9fbf8f" opacity=".8"/>
+  <text x="100" y="236" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="12" text-anchor="middle" fill="#8a745f">自備購物袋 ・ 少一個塑膠袋</text>
+</svg>

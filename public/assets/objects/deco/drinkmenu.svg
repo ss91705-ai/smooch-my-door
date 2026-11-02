@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="210" viewBox="0 0 150 210">
+  <rect x="1" y="1" width="148" height="208" rx="4" fill="#fffaf0" stroke="#e5dcc8"/>
+  <rect x="1" y="1" width="148" height="44" rx="4" fill="#c9884a"/>
+  <text x="75" y="31" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="20" font-weight="800" text-anchor="middle" fill="#fff">手搖飲 MENU</text>
+  <g font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="13" fill="#5a4030">
+    <text x="12" y="70">珍珠奶茶</text><text x="138" y="70" text-anchor="end">55</text>
+    <text x="12" y="92">四季春</text><text x="138" y="92" text-anchor="end">35</text>
+    <text x="12" y="114">冬瓜檸檬</text><text x="138" y="114" text-anchor="end">50</text>
+    <text x="12" y="136">黑糖鮮奶</text><text x="138" y="136" text-anchor="end">65</text>
+  </g>
+  <path d="M12 146 H138" stroke="#e5dcc8"/>
+  <text x="12" y="166" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="10.5" fill="#a0784f">甜度：全糖／半糖／微糖</text>
+  <text x="12" y="186" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="10.5" fill="#a0784f">冰塊：正常／少冰／去冰</text>
+  <circle cx="128" cy="96" r="0" fill="none" stroke="#d9475a" stroke-width="3"/>
+  <path d="M8 64 h68" stroke="#d9475a" stroke-width="2" opacity=".0"/><circle cx="104" cy="65" r="11" fill="none" stroke="#d9475a" stroke-width="2.5"/>
+</svg>

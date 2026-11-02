@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="180" viewBox="0 0 110 180">
+  <defs><linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2392f"/><stop offset="1" stop-color="#b81f1a"/></linearGradient></defs>
+  <rect x="4" y="4" width="102" height="172" rx="6" fill="url(#r)"/>
+  <path d="M4 40 Q55 70 106 40" fill="none" stroke="#a61812" stroke-width="2"/>
+  <circle cx="55" cy="56" r="14" fill="#f0c75e"/>
+  <text x="55" y="122" font-family="'Kaiti TC','BiauKai','DFKai-SB','PingFang TC',serif" font-size="34" font-weight="700" text-anchor="middle" fill="#f6d27a">大吉</text>
+  <rect x="14" y="14" width="82" height="152" rx="3" fill="none" stroke="#f0c75e" stroke-width="1.5" stroke-dasharray="4 3"/>
+</svg>

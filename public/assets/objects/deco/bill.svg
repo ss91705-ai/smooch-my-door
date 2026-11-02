@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="210" viewBox="0 0 160 210">
+  <rect x="1" y="1" width="158" height="208" rx="3" fill="#fbfbf8" stroke="#d9d6cc"/>
+  <rect x="1" y="1" width="158" height="38" fill="#e7eef5"/>
+  <text x="80" y="27" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="17" font-weight="800" text-anchor="middle" fill="#2f4a66">繳費通知單</text>
+  <g font-family="'PingFang TC','Noto Sans TC',sans-serif" fill="#444">
+    <text x="14" y="64" font-size="12">電費　115年 9-10 月</text>
+    <text x="14" y="84" font-size="12">水費　115年 9-10 月</text>
+    <text x="14" y="110" font-size="12" font-weight="700">應繳金額</text>
+    <text x="146" y="134" font-size="20" font-weight="800" text-anchor="end" fill="#c0392b">NT$2,486</text>
+    <text x="14" y="154" font-size="11">繳費期限：11/20</text>
+  </g>
+  <g fill="#333"><rect x="14" y="164" width="2" height="30"/><rect x="19" y="164" width="1" height="30"/><rect x="23" y="164" width="3" height="30"/><rect x="29" y="164" width="1" height="30"/><rect x="33" y="164" width="2" height="30"/><rect x="38" y="164" width="1" height="30"/><rect x="42" y="164" width="3" height="30"/><rect x="48" y="164" width="1" height="30"/><rect x="52" y="164" width="2" height="30"/><rect x="57" y="164" width="1" height="30"/><rect x="61" y="164" width="3" height="30"/><rect x="67" y="164" width="2" height="30"/></g>
+  <text x="146" y="190" font-family="'PingFang TC',sans-serif" font-size="11" text-anchor="end" fill="#888">便利商店可繳</text>
+</svg>

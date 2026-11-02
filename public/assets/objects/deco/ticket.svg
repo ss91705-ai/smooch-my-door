@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="110" viewBox="0 0 300 110">
+  <defs><linearGradient id="t" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2b2350"/><stop offset="1" stop-color="#5b3d8a"/></linearGradient></defs>
+  <path d="M6 2 H294 a4 4 0 0 1 4 4 V44 a11 11 0 0 0 0 22 V104 a4 4 0 0 1 -4 4 H6 a4 4 0 0 1 -4 -4 V66 a11 11 0 0 0 0 -22 V6 a4 4 0 0 1 4 -4 Z" fill="url(#t)"/>
+  <path d="M222 6 V104" stroke="#fff" stroke-opacity=".5" stroke-dasharray="4 4"/>
+  <g fill="#ffd36e"><path d="M26 22 l3 6 6 3 -6 3 -3 6 -3 -6 -6 -3 6 -3z"/></g>
+  <text x="44" y="38" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="800" fill="#fff" letter-spacing="1">LIVE CONCERT</text>
+  <text x="20" y="64" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="15" fill="#e8dcff">2026.12.24 ・ 台北場</text>
+  <text x="20" y="88" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="15" font-weight="700" fill="#ffd36e">搖滾區 A　12排 08號</text>
+  <g fill="#fff">
+    <rect x="236" y="22" width="3" height="66"/><rect x="242" y="22" width="1.5" height="66"/><rect x="246" y="22" width="4" height="66"/><rect x="253" y="22" width="1.5" height="66"/><rect x="257" y="22" width="3" height="66"/><rect x="263" y="22" width="1.5" height="66"/><rect x="267" y="22" width="4" height="66"/><rect x="274" y="22" width="2" height="66"/><rect x="279" y="22" width="3" height="66"/>
+  </g>
+</svg>

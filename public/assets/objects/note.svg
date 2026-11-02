@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="p" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff6c9"/><stop offset="1" stop-color="#f6e39a"/>
+    </linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e9d283"/><stop offset="1" stop-color="#fbefbf"/>
+    </linearGradient>
+  </defs>
+  <path d="M4 4 H196 V164 L164 196 H4 Z" fill="url(#p)"/>
+  <path d="M196 164 L164 196 L170 170 Z" fill="url(#c)"/>
+  <path d="M28 70 H172 M28 112 H172 M28 154 H150" stroke="#e3cf86" stroke-width="2"/>
+  <text x="100" y="64" font-family="'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif" font-size="30" font-weight="700" text-anchor="middle" fill="#6b4a2b">明天記得</text>
+  <text x="100" y="106" font-family="'PingFang TC','Noto Sans TC','Microsoft JhengHei',sans-serif" font-size="34" font-weight="800" text-anchor="middle" fill="#b8492b">寄貨！</text>
+  <path d="M40 140 l8 8 l16 -18" fill="none" stroke="#6b4a2b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="76" y="150" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="18" fill="#6b4a2b">包裹 × 3</text>
+</svg>

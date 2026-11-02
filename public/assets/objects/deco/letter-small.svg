@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="200" viewBox="0 0 150 200">
+  <g transform="rotate(4 75 100)">
+    <rect x="16" y="10" width="120" height="176" rx="4" fill="#f3e3d6" stroke="#dcc6b2"/>
+  </g>
+  <rect x="8" y="16" width="126" height="178" rx="4" fill="#fdf6f0" stroke="#e2d2c4"/>
+  <path d="M8 20 L71 78 L134 20" fill="none" stroke="#e2d2c4" stroke-width="2"/>
+  <circle cx="71" cy="80" r="12" fill="#d9475a"/>
+  <path d="M71 87 c-8 -5 -9 -11 -5 -13 c2 -1 4 0 5 2 c1 -2 3 -3 5 -2 c4 2 3 8 -5 13z" fill="#fff"/>
+  <rect x="98" y="104" width="24" height="28" fill="#bfe3c9" stroke="#fff" stroke-width="3" stroke-dasharray="3 2"/>
+  <g font-family="'PingFang TC','Noto Sans TC',sans-serif" fill="#7a5a4a">
+    <text x="22" y="150" font-size="14">To：親愛的你</text>
+    <text x="22" y="174" font-size="12" fill="#a8857a">生日快樂 ♡</text>
+  </g>
+</svg>

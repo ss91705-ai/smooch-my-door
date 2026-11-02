@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="124" height="180" viewBox="0 0 124 180">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd6e7"/><stop offset=".5" stop-color="#e5d4ff"/><stop offset="1" stop-color="#c9ecff"/></linearGradient>
+    <linearGradient id="s" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/><stop offset=".7" stop-color="#fff" stop-opacity=".25"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect x="2" y="2" width="120" height="176" rx="6" fill="#eef4f8" fill-opacity=".55" stroke="#c9d6df" stroke-width="2"/>
+  <rect x="8" y="12" width="108" height="160" rx="8" fill="url(#g)"/>
+  <circle cx="62" cy="78" r="30" fill="#fff" opacity=".6"/>
+  <path d="M62 102 C34 84 36 58 52 58 C58 58 62 63 62 67 C62 63 66 58 72 58 C88 58 90 84 62 102 Z" fill="#ff8fb5"/>
+  <g fill="#fff"><path d="M28 36 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/><path d="M96 120 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><circle cx="96" cy="40" r="3"/><circle cx="30" cy="126" r="2.5"/></g>
+  <text x="62" y="146" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="800" text-anchor="middle" fill="#7b5aa6" letter-spacing="2">MY BIAS</text>
+  <text x="62" y="162" font-family="Helvetica, Arial, sans-serif" font-size="9" text-anchor="middle" fill="#7b5aa6">♡ 2026 photocard ♡</text>
+  <rect x="2" y="2" width="120" height="176" rx="6" fill="url(#s)"/>
+  <rect x="38" y="2" width="48" height="6" rx="2" fill="#c9d6df"/>
+</svg>

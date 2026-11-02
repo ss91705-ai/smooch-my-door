@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="270" viewBox="0 30 220 270">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d7a676"/><stop offset=".55" stop-color="#c08752"/><stop offset="1" stop-color="#9c6539"/>
+    </linearGradient>
+    <linearGradient id="flap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c99260"/><stop offset="1" stop-color="#a36b3d"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M74 114 C74 22 146 22 146 114" fill="none" stroke="#6f4222" stroke-width="13" stroke-linecap="round"/>
+  <path d="M74 114 C74 22 146 22 146 114" fill="none" stroke="#9a6236" stroke-width="6" stroke-linecap="round"/>
+  <path d="M30 110 H190 L207 278 Q209 296 191 296 H29 Q11 296 13 278 Z" fill="url(#body)"/>
+  <path d="M30 110 H190 L207 278 Q209 296 191 296 H29 Q11 296 13 278 Z" fill="url(#shine)"/>
+  <path d="M30 110 H190 L197 178 Q110 206 23 178 Z" fill="url(#flap)"/>
+  <path d="M33 118 H187 M28 170 Q110 197 192 170" fill="none" stroke="#f1cfa3" stroke-width="1.6" stroke-dasharray="4 4" opacity=".8"/>
+  <rect x="97" y="181" width="26" height="20" rx="5" fill="#ead6a6" stroke="#b39257" stroke-width="2"/>
+  <circle cx="110" cy="191" r="3.5" fill="#b39257"/>
+  <circle cx="74" cy="113" r="8" fill="#e2c890" stroke="#a88b52" stroke-width="2"/>
+  <circle cx="146" cy="113" r="8" fill="#e2c890" stroke="#a88b52" stroke-width="2"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="172" height="212" viewBox="0 0 172 212">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb989"/><stop offset=".55" stop-color="#ffd9a6"/><stop offset=".56" stop-color="#5fa7c2"/><stop offset="1" stop-color="#2f7898"/></linearGradient>
+  </defs>
+  <rect x="1" y="1" width="170" height="210" rx="3" fill="#fbfaf6" stroke="#e6e2d8"/>
+  <rect x="10" y="10" width="152" height="150" fill="url(#sky)"/>
+  <circle cx="98" cy="88" r="16" fill="#fff1c9"/>
+  <path d="M10 92 H162" stroke="#ffe6b8" stroke-width="2" opacity=".7"/>
+  <path d="M10 160 Q60 130 100 148 Q130 160 162 140 V160 Z" fill="#e9d2a6"/>
+  <path d="M40 160 C42 128 46 110 52 96" stroke="#3e4a3a" stroke-width="4" fill="none"/>
+  <path d="M52 96 q-22 -2 -30 10 M52 96 q-6 -18 -24 -18 M52 96 q14 -14 30 -8 M52 96 q20 2 24 18 M52 96 q4 -20 -6 -30" stroke="#3e4a3a" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <text x="86" y="192" font-family="'Bradley Hand','PingFang TC','Noto Sans TC',sans-serif" font-size="20" text-anchor="middle" fill="#4a4a5a">墾丁 2026 ☀</text>
+</svg>

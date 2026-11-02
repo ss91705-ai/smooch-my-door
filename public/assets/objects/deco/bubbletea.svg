@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="240" viewBox="0 0 120 240">
+  <defs><linearGradient id="t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9c9a3"/><stop offset="1" stop-color="#c99a6a"/></linearGradient>
+  <linearGradient id="cup" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".3" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/></linearGradient></defs>
+  <path d="M60 4 C30 6 26 46 30 80 M60 4 C90 6 94 46 90 80" fill="none" stroke="#d8c7a8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M18 76 H102 L96 104 H24 Z" fill="#e8dcc4" stroke="#c9b894"/>
+  <path d="M68 40 L76 10" stroke="#e05b6b" stroke-width="7" stroke-linecap="round"/>
+  <path d="M28 104 H92 L84 228 Q60 238 36 228 Z" fill="url(#t)"/>
+  <g fill="#3b2418"><circle cx="44" cy="214" r="6"/><circle cx="58" cy="220" r="6"/><circle cx="72" cy="214" r="6"/><circle cx="51" cy="204" r="6"/><circle cx="66" cy="204" r="6"/><circle cx="78" cy="202" r="5"/><circle cx="40" cy="200" r="5"/></g>
+  <path d="M28 104 H92 L84 228 Q60 238 36 228 Z" fill="url(#cup)" opacity=".5"/>
+  <rect x="34" y="132" width="52" height="34" rx="4" fill="#fff" opacity=".9"/>
+  <text x="60" y="154" font-family="'PingFang TC','Noto Sans TC',sans-serif" font-size="14" font-weight="800" text-anchor="middle" fill="#8a5a2e">珍奶</text>
+  <path d="M30 108 V226" stroke="#fff" stroke-width="3" opacity=".6"/>
+</svg>

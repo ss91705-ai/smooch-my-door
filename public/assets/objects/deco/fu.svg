@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs><linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9302a"/><stop offset="1" stop-color="#b3201c"/></linearGradient></defs>
+  <path d="M100 2 L198 100 L100 198 L2 100 Z" fill="url(#r)"/>
+  <path d="M100 14 L186 100 L100 186 L14 100 Z" fill="none" stroke="#e9c46a" stroke-width="3"/>
+  <path d="M100 22 L178 100 L100 178 L22 100 Z" fill="none" stroke="#e9c46a" stroke-width="1" stroke-dasharray="3 4"/>
+  <text x="100" y="128" font-family="'Kaiti TC','BiauKai','STKaiti','DFKai-SB','PingFang TC','Noto Serif TC',serif" font-size="82" font-weight="700" text-anchor="middle" fill="#f3cf72">福</text>
+</svg>

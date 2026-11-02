@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="140" viewBox="0 0 80 140">
+  <g transform="rotate(-6 40 70)">
+    <path d="M10 8 H62 V130 l-4 -3 -4 3 -4 -3 -4 3 -4 -3 -4 3 -4 -3 -4 3 -4 -3 -4 3 -4 -3 -4 3 Z" fill="#f4f1ea" stroke="#d6d1c4"/>
+  </g>
+  <path d="M16 4 H70 V128 l-4.5 -3 -4.5 3 -4.5 -3 -4.5 3 -4.5 -3 -4.5 3 -4.5 -3 -4.5 3 -4.5 -3 -4.5 3 -4.5 -3 -4.5 3 Z" fill="#fffefb" stroke="#d6d1c4"/>
+  <g font-family="'PingFang TC','Noto Sans TC',sans-serif" fill="#444" text-anchor="middle">
+    <text x="43" y="20" font-size="8" font-weight="700">電子發票證明聯</text>
+    <text x="43" y="34" font-size="9" font-weight="800">115年11-12月</text>
+    <text x="43" y="48" font-size="8.5" font-weight="800">AB-12345678</text>
+  </g>
+  <g fill="#333">
+    <rect x="22" y="58" width="18" height="18"/><rect x="46" y="58" width="18" height="18"/>
+    <rect x="25" y="61" width="12" height="12" fill="#fffefb"/><rect x="49" y="61" width="12" height="12" fill="#fffefb"/>
+    <rect x="28" y="64" width="6" height="6"/><rect x="52" y="64" width="6" height="6"/>
+  </g>
+  <path d="M22 86 H64 M22 94 H56 M22 102 H62 M22 110 H50" stroke="#bdb8ad" stroke-width="2"/>
+</svg>
