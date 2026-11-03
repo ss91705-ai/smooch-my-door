@@ -14,23 +14,56 @@ export const sound = {
     enabled = v;
     saveJSON(STORAGE_KEYS.settings, { ...loadJSON(STORAGE_KEYS.settings, {}), sound: v });
   },
-  unlock() {
-    try {
-      if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-      if (ctx.state === 'suspended') ctx.resume();
-    } catch {
-      ctx = null;
-    }
-  },
+    unlock,
   play(name) {
-    if (!enabled || !ctx) return;
-    try {
-      SOUNDS[name]?.(ctx);
-    } catch {
-      /* ignore */
-    }
+    if (!enabled) return;
+    unlock();
+    if (!ctx) return;
+    const run = () => {
+      try {
+        SOUNDS[name]?.(ctx);
+      } catch {
+        /* ignore */
+      }
+    };
+    // 音效還在啟用中（iPhone 第一次操作時）→ 啟用完成後再播，不會漏掉
+    if (ctx.state === 'running') run();
+    else ctx.resume?.().then(run, () => {});
   },
 };
+
+// 建立並喚醒 AudioContext。iPhone Safari 只在「手指放開／點擊」這類操作中允許喚醒，
+// 所以除了按下，也在放開、點擊、按鍵時都試一次，並播放一段無聲音訊完成解鎖。
+function unlock() {
+  try {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state !== 'running') {
+      ctx.resume?.();
+      const b = ctx.createBuffer(1, 1, 22050);
+      const s = ctx.createBufferSource();
+      s.buffer = b;
+      s.connect(ctx.destination);
+      s.start(0);
+    }
+  } catch {
+    ctx = null;
+  }
+}
+
+if (typeof window !== 'undefined') {
+  const events = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'click', 'keydown'];
+  const handler = () => {
+    unlock();
+    if (ctx?.state === 'running') events.forEach((ev) => window.removeEventListener(ev, handler, true));
+  };
+  events.forEach((ev) => window.addEventListener(ev, handler, { capture: true, passive: true }));
+  // 從背景回到網頁時（例如切換 App 回來），iPhone 會暫停音效，再喚醒一次
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && ctx && ctx.state !== 'running') {
+      events.forEach((ev) => window.addEventListener(ev, handler, { capture: true, passive: true }));
+    }
+  });
+}
 
 function tone(c, { f0, f1, dur, type = 'sine', vol = 0.3, delay = 0 }) {
   const t = c.currentTime + delay;
