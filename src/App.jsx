@@ -597,9 +597,15 @@ export default function App() {
         <div className="ghost-layer">
           <div
             className={'ghost' + (ghost.hot ? ' hot' : '')}
-            style={{ left: ghost.gx - ghost.sw / 2, top: ghost.gy - ghost.sh / 2, width: ghost.sw, height: ghost.sh }}
+            style={{
+              transform: `translate3d(${ghost.gx - ghost.sw / 2}px, ${ghost.gy - ghost.sh / 2}px, 0)`,
+              width: ghost.sw,
+              height: ghost.sh,
+            }}
           >
-            <ProductImage product={ghost.product} meta={meta[ghost.product.id]} w={ghost.sw} h={ghost.sh} />
+            <div className="ghost-inner">
+              <ProductImage product={ghost.product} meta={meta[ghost.product.id]} w={ghost.sw} h={ghost.sh} />
+            </div>
             {ghost.small && <div className="ghost-ring" />}
           </div>
           {ghost.small && <Loupe product={ghost.product} meta={meta[ghost.product.id]} x={ghost.gx} y={ghost.gy - 52} />}
