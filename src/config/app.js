@@ -3,7 +3,7 @@ export const APP = {
   title: 'SMOOCH MY DOOR',
   brand: 'Smooch Home',
   // 正式公開時改成 false，就無法再開啟開發測試面板
-  devModeEnabled: true,
+  devModeEnabled: false,
 };
 
 export const STORAGE_KEYS = {
