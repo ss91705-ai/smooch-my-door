@@ -4,7 +4,7 @@ import EventLayer from './components/EventLayer.jsx';
 import Tray from './components/Tray.jsx';
 import DevPanel from './components/DevPanel.jsx';
 import ProductImage, { Loupe } from './components/ProductImage.jsx';
-import { EggsModal, ConfirmModal, EggUnlock } from './components/Modals.jsx';
+import { EggsModal, ConfirmModal, EggUnlock, TemplateModal } from './components/Modals.jsx';
 import { FinishView, RewardModal, RewardPop, PersonaPop } from './components/Rewards.jsx';
 import { computeRewards } from './lib/rewards.js';
 import { LUCKY_CHANCE, PERSONAS } from './config/personas.js';
@@ -23,7 +23,7 @@ import {
   saveJSON,
   uid,
 } from './lib/core.js';
-import { layoutReducer, loadLayout, saveLayout } from './lib/layout.js';
+import { layoutReducer, loadLayout, saveLayout, layoutFromTemplate } from './lib/layout.js';
 import {
   ALL_ASSETS,
   computeSized,
@@ -509,6 +509,17 @@ export default function App() {
     setModal('finish');
   };
 
+  // 套用預設範本（取代目前門上的佈置）
+  const applyTemplate = (t) => {
+    dispatch({ type: 'load', layout: layoutFromTemplate(t) });
+    setSelectedId(null);
+    setModal(null);
+    camApi.reset?.();
+    setCelebrate(Date.now() + 1); // 與提示訊息的 key 錯開
+    sound.play('success');
+    showToast('範本套用好了！可以自己再加、移動或拿掉配件');
+  };
+
   const clearAll = () => {
     Object.values(STORAGE_KEYS).forEach(removeKey);
     dispatch({ type: 'reset' });
@@ -590,6 +601,7 @@ export default function App() {
         onCardPointerDown={onCardPointerDown}
         onFinish={doFinish}
         onReset={() => setModal('reset')}
+        onTemplates={() => setModal('templates')}
         armedId={ghost?.product.id}
       />
 
@@ -645,6 +657,9 @@ export default function App() {
       {modal === 'rewards' && <RewardModal info={rewardInfo} onClose={() => setModal(null)} />}
       {showPersonaPop && <PersonaPop id={showPersonaPop} onClose={() => setPersonaPop(null)} />}
       {showReward && <RewardPop amount={showReward} info={rewardInfo} onClose={() => setRewardPop(null)} />}
+      {modal === 'templates' && (
+        <TemplateModal hasItems={layout.items.length > 0} onPick={applyTemplate} onClose={() => setModal(null)} />
+      )}
       {modal === 'reset' && (
         <ConfirmModal
           title="重置佈置？"

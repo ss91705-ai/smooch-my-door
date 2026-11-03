@@ -2,7 +2,8 @@ import { EGG_SETTINGS } from '../config/eggs.js';
 
 // 依門上的 POINTITI 商品判定五種彩蛋條件
 export function evaluateEggs(sized) {
-  const products = sized.filter((i) => i.def.kind === 'product');
+  // 範本上的配件（tpl）不算，玩家自己加上去的才算
+  const products = sized.filter((i) => i.def.kind === 'product' && !i.tpl);
   const byColor = {};
   for (const p of products) byColor[p.colorId] = (byColor[p.colorId] || 0) + 1;
   const cats = new Set(products.map((p) => p.def.category));

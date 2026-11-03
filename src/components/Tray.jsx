@@ -7,7 +7,7 @@ import { Fragment } from 'react';
 
 // 下方商品選單：分類 → 各款配色（可水平滑動）→ 拖曳到門上（或點一下直接放到門中央）
 const Tray = forwardRef(function Tray(
-  { category, setCategory, meta, onCardPointerDown, onFinish, onReset, armedId },
+  { category, setCategory, meta, onCardPointerDown, onFinish, onReset, onTemplates, armedId },
   ref,
 ) {
   const list = TRAY_ITEMS.filter((p) => p.category === category);
@@ -59,8 +59,11 @@ const Tray = forwardRef(function Tray(
         })}
       </div>
       <div className="actions">
+        <button className="btn-line" onClick={onTemplates}>
+          範本
+        </button>
         <button className="btn-line" onClick={onReset}>
-          重置佈置
+          重置
         </button>
         <button className="primary" onClick={onFinish}>
           完成佈置

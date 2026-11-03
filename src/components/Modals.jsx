@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { PERSONAS, RARITIES } from '../config/personas.js';
 import { EGGS, EGG_MAP } from '../config/eggs.js';
 import { sound } from '../lib/sound.js';
+import { TEMPLATES } from '../config/templates.js';
+import { assetUrl } from '../lib/core.js';
 
 export function Modal({ children, onClose }) {
   return (
@@ -133,6 +135,32 @@ export function ConfirmModal({ title, text, okLabel = '確定', onOk, onClose })
           {okLabel}
         </button>
       </div>
+    </Modal>
+  );
+}
+
+// 預設範本：挑一個已擺好的大門，套用後可以自己再改
+export function TemplateModal({ hasItems, onPick, onClose }) {
+  return (
+    <Modal onClose={onClose}>
+      <h3>挑一個範本開始</h3>
+      <p className="sub">
+        {hasItems ? '套用後會取代目前門上的佈置。' : ''}套用後可以自己加、移動或拿掉配件。
+        <br />
+        範本上的配件不計入隱藏彩蛋，自己動手加的才算喔！
+      </p>
+      <div className="tpl-grid">
+        {TEMPLATES.map((t) => (
+          <button key={t.id} className="tpl" onClick={() => onPick(t)}>
+            <img src={assetUrl(t.thumb)} alt="" loading="lazy" />
+            <b>{t.name}</b>
+            <small>{t.desc}</small>
+          </button>
+        ))}
+      </div>
+      <button className="btn-line tpl-close" onClick={onClose}>
+        自己從頭佈置
+      </button>
     </Modal>
   );
 }

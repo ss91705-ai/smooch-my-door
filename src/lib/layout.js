@@ -45,6 +45,20 @@ export function cleanup(items) {
   }
   return list;
 }
+// 套用預設範本：換成新的 id，標記 tpl（範本配件不計入隱藏彩蛋）
+export function layoutFromTemplate(t) {
+  const stamp = Date.now().toString(36);
+  const nid = (id) => `${id}-${stamp}`;
+  const items = t.items.map((it, n) => ({
+    ...it,
+    id: nid(it.id),
+    parentId: it.parentId ? nid(it.parentId) : null,
+    z: n + 1,
+    tpl: true,
+    createdAt: Date.now(),
+  }));
+  return { version: 1, z: items.length + 1, items: cleanup(items) };
+}
 export const saveLayout = (layout) => saveJSON(STORAGE_KEYS.layout, layout);
 
 // 某物件的所有子孫（掛鉤上的包包、壓在便條紙上的掛鉤上的包包…）
