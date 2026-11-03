@@ -530,7 +530,7 @@ export default function App() {
     dispatch({ type: 'load', layout: layoutFromTemplate(t) });
     setSelectedId(null);
     setModal(null);
-    camApi.overview(); // 套用範本先看整扇門
+    camApi.reset(); // 套用範本後回到開場的放大畫面
     setCelebrate(Date.now() + 1); // 與提示訊息的 key 錯開
     sound.play('success');
     showToast('範本套用好了！可以自己再加、移動或拿掉配件');
