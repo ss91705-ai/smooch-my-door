@@ -35,7 +35,7 @@ export function Loupe({ product, meta, x, y }) {
   const w = meta.aspect >= 1 ? size : size * meta.aspect;
   const h = meta.aspect >= 1 ? size / meta.aspect : size;
   return (
-    <div className="loupe" style={{ left: x, top: y }}>
+    <div className="loupe" style={{ transform: `translate3d(${x - 32}px, ${y - 32}px, 0)` }}>
       <ProductImage product={product} meta={meta} w={w} h={h} />
     </div>
   );
