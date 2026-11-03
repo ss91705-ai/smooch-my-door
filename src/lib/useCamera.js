@@ -5,7 +5,8 @@ import { clamp } from './core.js';
 // 所以不同手機尺寸下，商品與門板永遠對齊，背景也不會被拉伸。
 export function useCamera(viewportRef, scene) {
   const [size, setSize] = useState({ w: 360, h: 520 });
-  const [view, setView] = useState({ zoom: 1, cx: null, cy: null });
+  // zoom 為 null = 開場取景（依螢幕寬度計算）
+  const [view, setView] = useState({ zoom: null, cx: null, cy: null });
 
   useLayoutEffect(() => {
     const el = viewportRef.current;
@@ -22,7 +23,9 @@ export function useCamera(viewportRef, scene) {
 
   const f = scene.focus;
   const fit = Math.min(size.w / f.w, size.h / f.h);
-  const zoom = clamp(view.zoom, scene.minZoom, scene.maxZoom);
+  const sv = scene.startView;
+  const startZoom = sv ? clamp(size.w / sv.width / fit, 1, sv.maxZoom || scene.maxZoom) : 1;
+  const zoom = clamp(view.zoom ?? startZoom, scene.minZoom, scene.maxZoom);
   const scale = fit * zoom;
 
   const clampCenter = useCallback(
@@ -37,7 +40,8 @@ export function useCamera(viewportRef, scene) {
     [size, scene.width, scene.height],
   );
 
-  const c = clampCenter(view.cx ?? f.x + f.w / 2, view.cy ?? f.y + f.h / 2, scale);
+  const atStart = view.zoom == null && sv;
+  const c = clampCenter(view.cx ?? (atStart ? sv.cx : f.x + f.w / 2), view.cy ?? (atStart ? sv.cy : f.y + f.h / 2), scale);
   const tx = size.w / 2 - c.cx * scale;
   const ty = size.h / 2 - c.cy * scale;
 
@@ -47,6 +51,41 @@ export function useCamera(viewportRef, scene) {
   );
   const camRef = useRef(cam);
   camRef.current = cam;
+
+  const edge = useRef({ raf: 0, since: 0 });
+  const edgeCfg = useRef(scene.edgePan);
+  edgeCfg.current = scene.edgePan;
+  const edgeStep = useCallback(() => {
+    const E = edge.current;
+    E.raf = 0;
+    const el = viewportRef.current;
+    const ec = edgeCfg.current;
+    if (!el || !ec || E.x == null) return;
+    const r = el.getBoundingClientRect();
+    const inside = E.x >= r.left && E.x <= r.right && E.y >= r.top && E.y <= r.bottom;
+    // 越靠近邊緣越快（0～1）
+    const push = (d) => (d < ec.margin ? 1 - Math.max(d, 0) / ec.margin : 0);
+    const vx = inside ? push(E.x - r.left) * -1 + push(r.right - E.x) : 0;
+    const vy = inside ? push(E.y - r.top) * -1 + push(r.bottom - E.y) : 0;
+    if (!vx && !vy) {
+      E.since = 0;
+      E.raf = requestAnimationFrame(edgeStep);
+      return;
+    }
+    const now = performance.now();
+    if (!E.since) E.since = now;
+    if (now - E.since >= ec.delay) {
+      const k = camRef.current;
+      setView((v) => ({
+        zoom: v.zoom,
+        cx: k.cx + (vx * ec.speed) / k.scale,
+        cy: k.cy + (vy * ec.speed) / k.scale,
+      }));
+      // 鏡頭更新後（下一格）再讓拖曳中的物件跟上手指
+      requestAnimationFrame(() => E.onTick?.());
+    }
+    E.raf = requestAnimationFrame(edgeStep);
+  }, [viewportRef]);
 
   const api = useMemo(() => {
     const rect = () => viewportRef.current.getBoundingClientRect();
@@ -77,14 +116,32 @@ export function useCamera(viewportRef, scene) {
         const cy = w.y - (ay - k.size.h / 2) / s;
         setView({ zoom: z, cx, cy });
       },
+      // 回到開場取景
       reset() {
+        setView({ zoom: null, cx: null, cy: null });
+      },
+      // 看整扇門
+      overview() {
         setView({ zoom: 1, cx: null, cy: null });
+      },
+      // 拖曳時手指停在畫面邊緣 → 自動捲動；onTick 在每次捲動後重新計算拖曳中物件的位置
+      edgePan(clientX, clientY, onTick) {
+        const E = edge.current;
+        E.x = clientX;
+        E.y = clientY;
+        E.onTick = onTick;
+        if (!E.raf) E.raf = requestAnimationFrame(edgeStep);
+      },
+      stopEdgePan() {
+        const E = edge.current;
+        cancelAnimationFrame(E.raf);
+        edge.current = { raf: 0, since: 0 };
       },
       get current() {
         return camRef.current;
       },
     };
-  }, [viewportRef, scene.minZoom, scene.maxZoom]);
+  }, [viewportRef, scene.minZoom, scene.maxZoom, edgeStep]);
 
   return [cam, api];
 }

@@ -181,10 +181,20 @@ export default function App() {
 
   // ── 提示訊息 ──
   const [toast, setToast] = useState(null);
-  const showToast = useCallback((text) => setToast({ text, key: Date.now() }), []);
+  const showToast = useCallback((text, ms = 2200) => setToast({ text, key: Date.now(), ms }), []);
+  // 已經有佈置的玩家第一次進來，提示可以縮放（空的門由門上的提示文字說明）
+  const startedEmpty = useRef(layout.items.length === 0);
+  useEffect(() => {
+    if (startedEmpty.current || loadJSON(STORAGE_KEYS.settings, {})?.zoomHint) return;
+    const t = setTimeout(() => {
+      showToast('雙指或雙擊門上空白處，可以放大／看整扇門', 3800);
+      saveJSON(STORAGE_KEYS.settings, { ...loadJSON(STORAGE_KEYS.settings, {}), zoomHint: 1 });
+    }, 900);
+    return () => clearTimeout(t);
+  }, [showToast]);
   useEffect(() => {
     if (!toast) return;
-    const t = setTimeout(() => setToast(null), 2200);
+    const t = setTimeout(() => setToast(null), toast.ms || 2200);
     return () => clearTimeout(t);
   }, [toast]);
 
@@ -443,12 +453,18 @@ export default function App() {
         }
       }
       if (e.cancelable) e.preventDefault();
-      setGhost(calcRef.current(P.product, e.clientX, e.clientY, P.touch));
+      const g = calcRef.current(P.product, e.clientX, e.clientY, P.touch);
+      setGhost(g);
+      // 商品（手指上方的位置）停在畫面邊緣 → 鏡頭自動捲動
+      P.lx = e.clientX;
+      P.ly = e.clientY;
+      camApi.edgePan(g.gx, g.gy, () => pending.current === P && setGhost(calcRef.current(P.product, P.lx, P.ly, P.touch)));
     };
     const up = (e) => {
       const P = pending.current;
       if (!P || e.pointerId !== P.id) return;
       pending.current = null;
+      camApi.stopEdgePan();
       if (e.type === 'pointercancel') {
         setGhost(null);
         return;
@@ -514,7 +530,7 @@ export default function App() {
     dispatch({ type: 'load', layout: layoutFromTemplate(t) });
     setSelectedId(null);
     setModal(null);
-    camApi.reset?.();
+    camApi.overview(); // 套用範本先看整扇門
     setCelebrate(Date.now() + 1); // 與提示訊息的 key 錯開
     sound.play('success');
     showToast('範本套用好了！可以自己再加、移動或拿掉配件');

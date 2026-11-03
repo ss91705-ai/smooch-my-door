@@ -32,6 +32,13 @@ export const SCENE = {
   // 預設鏡頭取景範圍（包含整扇門與門鈴螢幕）
   focus: { x: 120, y: 175, w: 780, h: 1300 },
 
+  // 開場取景：畫面寬度剛好放下約 width 場景像素（門扇寬 572），以 (cx, cy) 為中心，
+  // 物品看起來比較大；倍數最多 maxZoom。按 ⤢ 或雙擊可以拉回整扇門
+  startView: { width: 640, cx: 468, cy: 800, maxZoom: 1.8 },
+
+  // 拖曳到畫面邊緣時自動捲動：邊緣感應寬度（px）、停留多久才開始（ms）、最快速度（px／每格）
+  edgePan: { margin: 44, delay: 300, speed: 12 },
+
   // 鏡頭縮放範圍（1 = 看到整扇門）
   minZoom: 1,
   maxZoom: 5,

@@ -1882,3 +1882,10 @@ button {
 .tpl-close {
   width: 100%;
 }
+
+.hint small {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  opacity: 0.75;
+}

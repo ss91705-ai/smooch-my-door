@@ -47,6 +47,7 @@ export default function Scene({
 }) {
   const scene = cfg.scene;
   const gesture = useRef(null);
+  const lastTap = useRef(null); // 雙擊判斷
   const pointers = useRef(new Map());
   const [drag, setDrag] = useState(null);
   const [groom, setGroom] = useState(null);
@@ -102,6 +103,7 @@ export default function Scene({
       // 第二指放下 → 改成捏合縮放；若正在拖東西，先放回原位
       const g = gesture.current;
       if (g?.type === 'item' && g.moved) dispatch({ type: 'move', id: g.id, x: g.origX, y: g.origY });
+      camApi.stopEdgePan();
       setDrag(null);
       onDraggingChange?.(false);
       const [a, b] = [...pointers.current.values()];
@@ -136,6 +138,25 @@ export default function Scene({
     }
   }
 
+  function dragItemTo(g, clientX, clientY) {
+    g.lx = clientX;
+    g.ly = clientY;
+    const w = camApi.worldFromClient(clientX, clientY);
+    const x = w.x + g.offX;
+    const y = w.y + g.offY;
+    dispatch({ type: 'move', id: g.id, x, y });
+    const it = latest.current.sized.find((i) => i.id === g.id);
+    const k = latest.current.cam;
+    setDrag({
+      id: g.id,
+      removing: overTray(clientY),
+      hot: inRect(x, y, scene.doorZone, 30 / k.scale),
+      clientX,
+      clientY,
+      small: it && Math.min(it.w, it.h) * k.scale < SMALL,
+    });
+  }
+
   function onPointerMove(e) {
     if (!pointers.current.has(e.pointerId)) return;
     pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -167,20 +188,9 @@ export default function Scene({
     if (!g.moved) return;
 
     if (g.type === 'item') {
-      const w = camApi.worldFromClient(e.clientX, e.clientY);
-      const x = w.x + g.offX;
-      const y = w.y + g.offY;
-      dispatch({ type: 'move', id: g.id, x, y });
-      const it = latest.current.sized.find((i) => i.id === g.id);
-      const k = latest.current.cam;
-      setDrag({
-        id: g.id,
-        removing: overTray(e.clientY),
-        hot: inRect(x, y, scene.doorZone, 30 / k.scale),
-        clientX: e.clientX,
-        clientY: e.clientY,
-        small: it && Math.min(it.w, it.h) * k.scale < SMALL,
-      });
+      dragItemTo(g, e.clientX, e.clientY);
+      // 停在畫面邊緣 → 鏡頭自動往那邊移，物件跟著手指
+      camApi.edgePan(e.clientX, e.clientY, () => gesture.current === g && dragItemTo(g, g.lx, g.ly));
     } else if (g.type === 'pan') {
       const k = latest.current.cam;
       camApi.setCenter(g.cx - dx / k.scale, g.cy - dy / k.scale);
@@ -196,6 +206,7 @@ export default function Scene({
       return;
     }
     gesture.current = null;
+    camApi.stopEdgePan();
     setDrag(null);
     onDraggingChange?.(false);
     const cancelled = e.type === 'pointercancel';
@@ -282,6 +293,15 @@ export default function Scene({
       snapTo(p.x, p.y, patch);
     } else if (g.type === 'pan' && !g.moved) {
       setSelectedId(null);
+      const now = Date.now();
+      const t = lastTap.current;
+      if (t && now - t.t < 320 && Math.hypot(e.clientX - t.x, e.clientY - t.y) < 30) {
+        lastTap.current = null;
+        const k = latest.current.cam;
+        if (k.zoom > 1.05) camApi.overview();
+        else camApi.zoomTo(2.2, { x: e.clientX, y: e.clientY });
+        sound.play('pick');
+      } else lastTap.current = { t: now, x: e.clientX, y: e.clientY };
     }
   }
 
@@ -521,7 +541,12 @@ export default function Scene({
         )}
       </div>
 
-      {sized.length === 0 && !trayHint && <div className="hint">從下方拖曳配件，吸到門上 ✦</div>}
+      {sized.length === 0 && !trayHint && (
+        <div className="hint">
+          從下方拖曳配件，吸到門上 ✦
+          <small>雙指或雙擊空白處可以放大／看整扇門</small>
+        </div>
+      )}
 
       {looseTags.map((t) => (
         <div key={t.id} className={'obj-tag' + (t.warn ? ' warn' : '')} style={{ left: clamp(t.x, 50, cam.size.w - 50), top: clamp(t.y - 6, 22, cam.size.h - 10) }}>
@@ -561,7 +586,7 @@ export default function Scene({
           －
         </button>
         {cam.zoom > 1.01 && (
-          <button aria-label="看整扇門" className="fit" onClick={() => camApi.reset()}>
+          <button aria-label="看整扇門" className="fit" onClick={() => camApi.overview()}>
             ⤢
           </button>
         )}
