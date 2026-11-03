@@ -164,6 +164,7 @@ button {
 .item.dragging .item-inner {
   transform: scale(1.06);
   transition: transform 0.12s;
+  filter: none;
 }
 .item-inner.snap {
   animation: snap 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.2);
@@ -255,6 +256,7 @@ button {
 /* 拖曳提示 */
 .doorglow {
   position: absolute;
+  will-change: transform;
   border: 3px dashed rgba(255, 255, 255, 0.55);
   pointer-events: none;
   transition: background 0.15s, border-color 0.15s;
@@ -262,11 +264,11 @@ button {
 .doorglow.hot {
   border-color: rgba(255, 244, 214, 0.95);
   border-style: solid;
-  background: rgba(255, 240, 200, 0.08);
-  box-shadow: inset 0 0 30px rgba(255, 236, 190, 0.35);
+  background: rgba(255, 240, 200, 0.1);
 }
 .snapspot {
   position: absolute;
+  will-change: transform;
   border: 2px dashed rgba(255, 255, 255, 0.9);
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.12);
@@ -403,9 +405,11 @@ button {
 
 .loupe {
   position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
   width: 64px;
   height: 64px;
-  margin: -32px 0 0 -32px;
   border-radius: 50%;
   background: rgba(251, 248, 243, 0.95);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 0 0 2px #fff;
@@ -424,13 +428,19 @@ button {
   z-index: 50;
 }
 .ghost {
+  /* 用 transform 移動＋獨立圖層，不加陰影濾鏡：避免 iPhone Safari 拖曳時留下殘影 */
   position: absolute;
-  opacity: 0.88;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.ghost-inner {
+  opacity: 0.9;
   transform: scale(1.05);
   transition: transform 0.12s, opacity 0.12s;
-  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
 }
-.ghost.hot {
+.ghost.hot .ghost-inner {
   opacity: 1;
   transform: scale(1.12);
 }
