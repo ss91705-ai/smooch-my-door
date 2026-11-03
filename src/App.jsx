@@ -3,7 +3,7 @@ import Scene from './components/Scene.jsx';
 import EventLayer from './components/EventLayer.jsx';
 import Tray from './components/Tray.jsx';
 import DevPanel from './components/DevPanel.jsx';
-import ProductImage, { Loupe } from './components/ProductImage.jsx';
+import ProductImage, { Loupe, AimLine } from './components/ProductImage.jsx';
 import { EggsModal, ConfirmModal, EggUnlock, TemplateModal } from './components/Modals.jsx';
 import { FinishView, RewardModal, RewardPop, PersonaPop } from './components/Rewards.jsx';
 import { computeRewards } from './lib/rewards.js';
@@ -349,7 +349,7 @@ export default function App() {
     const sh = s.h * k.scale;
     const small = Math.min(sw, sh) < 30;
     // 手指操作時把商品顯示在手指上方，避免被手指擋住
-    const lift = touch ? Math.max(sh / 2 + 16, small ? 34 : 40) : 0;
+    const lift = touch ? (small ? cfg.scene.smallLift ?? 60 : Math.max(sh / 2 + 16, 40)) : 0;
     const gx = clientX;
     const gy = clientY - lift;
     const w = camApi.worldFromClient(gx, gy);
@@ -358,9 +358,15 @@ export default function App() {
     const plan = overTray ? null : planPlacement(def, s, w.x, w.y, 'drop');
     const ok = !!plan && !plan.error;
     const isPlaced = !['hang', 'pocket', 'shelf'].includes(def.mount);
+    // 磁鐵（或掛鉤底座）會固定到哪張紙
+    const pid = ok && plan.patch?.parentId;
     return {
       product: def,
       entry,
+      fx: clientX,
+      fy: clientY,
+      touch,
+      paper: pid && sized.find((i) => i.id === pid && i.def.mount === 'magnet') ? pid : null,
       gx,
       gy,
       sw,
@@ -591,7 +597,7 @@ export default function App() {
           selectedId={selectedId}
           setSelectedId={setSelectedId}
           trayRef={trayRef}
-          trayHint={ghost && { hot: ghost.hot, target: ghost.target, hook: ghost.hook, pocket: ghost.pocket, shelf: ghost.shelf, glow: ghost.glow }}
+          trayHint={ghost && { hot: ghost.hot, target: ghost.target, hook: ghost.hook, pocket: ghost.pocket, shelf: ghost.shelf, glow: ghost.glow, paper: ghost.paper }}
           overlays={overlays}
           doorbellOn={doorbellOn || !!events.def?.doorbell}
           doorbellImg={events.def?.doorbellImg}
@@ -623,6 +629,7 @@ export default function App() {
 
       {ghost && (
         <div className="ghost-layer">
+          {ghost.small && ghost.touch && <AimLine fx={ghost.fx} fy={ghost.fy} x={ghost.gx} y={ghost.gy} />}
           <div
             className={'ghost' + (ghost.hot ? ' hot' : '')}
             style={{
@@ -634,7 +641,7 @@ export default function App() {
             <div className="ghost-inner">
               <ProductImage product={ghost.product} meta={meta[ghost.product.id]} w={ghost.sw} h={ghost.sh} />
             </div>
-            {ghost.small && <div className="ghost-ring" />}
+            {ghost.small && !ghost.touch && <div className="ghost-ring" />}
           </div>
           {ghost.small && <Loupe product={ghost.product} meta={meta[ghost.product.id]} x={ghost.gx} y={ghost.gy - 52} />}
         </div>

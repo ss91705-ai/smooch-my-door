@@ -1889,3 +1889,37 @@ button {
   font-size: 11px;
   opacity: 0.75;
 }
+
+/* 小東西拖曳：瞄準線（手指 → 物品）與瞄準圈 */
+.aim {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 19;
+}
+.aim line {
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+.aim circle {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+}
+.aim .aim-shade {
+  stroke: rgba(0, 0, 0, 0.3);
+  stroke-width: 4;
+}
+/* 磁鐵放開後會固定的那張紙 */
+.pin-target {
+  position: absolute;
+  inset: -6%;
+  border: 2px solid #ffd76a;
+  border-radius: 8%;
+  box-shadow: 0 0 10px rgba(255, 215, 106, 0.8);
+  pointer-events: none;
+  animation: pulse 0.9s ease-in-out infinite;
+}

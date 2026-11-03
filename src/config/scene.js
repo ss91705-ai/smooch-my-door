@@ -36,6 +36,9 @@ export const SCENE = {
   // 物品看起來比較大；倍數最多 maxZoom。按 ⤢ 或雙擊可以拉回整扇門
   startView: { width: 640, cx: 468, cy: 800, maxZoom: 1.8 },
 
+  // 小東西（畫面上小於 30px，例如小圓磁鐵）拖曳時浮在手指上方多少 px，避免被手指擋住
+  smallLift: 60,
+
   // 拖曳到畫面邊緣時自動捲動：邊緣感應寬度（px）、停留多久才開始（ms）、最快速度（px／每格）
   edgePan: { margin: 44, delay: 300, speed: 12 },
 

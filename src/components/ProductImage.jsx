@@ -40,3 +40,14 @@ export function Loupe({ product, meta, x, y }) {
     </div>
   );
 }
+
+// 小東西拖曳時：從手指拉一條細線到物品，外加瞄準圈（座標為所在容器內的 px）
+export function AimLine({ fx, fy, x, y }) {
+  return (
+    <svg className="aim" width="100%" height="100%">
+      <line x1={fx} y1={fy} x2={x} y2={y} />
+      <circle className="aim-shade" cx={x} cy={y} r="13" />
+      <circle cx={x} cy={y} r="13" />
+    </svg>
+  );
+}

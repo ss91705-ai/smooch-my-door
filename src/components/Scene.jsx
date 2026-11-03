@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import ProductImage, { Loupe } from './ProductImage.jsx';
+import ProductImage, { Loupe, AimLine } from './ProductImage.jsx';
 import { assetUrl, clamp, inRect, pxPerCm, resolvePlacement } from '../lib/core.js';
 import { EGG_SETTINGS } from '../config/eggs.js';
 import {
@@ -131,6 +131,7 @@ export default function Scene({
         origX: hit.x,
         origY: hit.y,
         moved: false,
+        touch: e.pointerType !== 'mouse',
       };
     } else {
       const k = latest.current.cam;
@@ -141,18 +142,28 @@ export default function Scene({
   function dragItemTo(g, clientX, clientY) {
     g.lx = clientX;
     g.ly = clientY;
-    const w = camApi.worldFromClient(clientX, clientY);
+    const lift = g.lift || 0;
+    const w = camApi.worldFromClient(clientX, clientY - lift);
     const x = w.x + g.offX;
     const y = w.y + g.offY;
     dispatch({ type: 'move', id: g.id, x, y });
-    const it = latest.current.sized.find((i) => i.id === g.id);
-    const k = latest.current.cam;
+    const { sized: list, cam: k } = latest.current;
+    const it = list.find((i) => i.id === g.id);
+    // 磁鐵（或掛鉤底座）放開後會固定到哪張紙
+    let paper = null;
+    if (it?.def.category === 'magnet') paper = findPaperForMagnet(list, x, y, k.scale);
+    else if (it?.def.category === 'hook') {
+      const mp = hookMagnetPoint(x, y, it.w, it.h);
+      paper = findPaperForMagnet(list, mp.x, mp.y, k.scale);
+    }
     setDrag({
       id: g.id,
       removing: overTray(clientY),
       hot: inRect(x, y, scene.doorZone, 30 / k.scale),
       clientX,
       clientY,
+      lift,
+      paper: paper?.id || null,
       small: it && Math.min(it.w, it.h) * k.scale < SMALL,
     });
   }
@@ -179,6 +190,14 @@ export default function Scene({
     if (!g.moved && Math.hypot(dx, dy) > 5) {
       g.moved = true;
       if (g.type === 'item') {
+        const it = latest.current.sized.find((i) => i.id === g.id);
+        const k = latest.current.cam;
+        if (g.touch && it && Math.min(it.w, it.h) * k.scale < SMALL) {
+          // 小東西：物品改成跟著「手指上方」移動，不會被手指擋住
+          g.lift = scene.smallLift ?? 60;
+          g.offX = 0;
+          g.offY = 0;
+        }
         dispatch({ type: 'front', id: g.id });
         setSelectedId(g.id);
         sound.play('pick');
@@ -190,7 +209,7 @@ export default function Scene({
     if (g.type === 'item') {
       dragItemTo(g, e.clientX, e.clientY);
       // 停在畫面邊緣 → 鏡頭自動往那邊移，物件跟著手指
-      camApi.edgePan(e.clientX, e.clientY, () => gesture.current === g && dragItemTo(g, g.lx, g.ly));
+      camApi.edgePan(e.clientX, e.clientY - (g.lift || 0), () => gesture.current === g && dragItemTo(g, g.lx, g.ly));
     } else if (g.type === 'pan') {
       const k = latest.current.cam;
       camApi.setCenter(g.cx - dx / k.scale, g.cy - dy / k.scale);
@@ -486,6 +505,7 @@ export default function Scene({
                 )}
               </div>
               {it.state === 'loose' && <div className="loose-ring" style={{ borderWidth: lw * 1.2 }} />}
+              {(drag?.paper || trayHint?.paper) === it.id && <div className="pin-target" style={{ borderWidth: lw * 1.5 }} />}
               {selectedId === it.id && (
                 <div
                   className="sel"
@@ -577,6 +597,7 @@ export default function Scene({
       {drag?.small && dragItem && (
         <LoupeAt viewportRef={viewportRef} drag={drag} item={dragItem} meta={meta} />
       )}
+      {drag?.lift > 0 && !drag.removing && <AimAt viewportRef={viewportRef} drag={drag} />}
 
       <div className="zoomctl" onPointerDown={(e) => e.stopPropagation()}>
         <button aria-label="放大" onClick={() => camApi.zoomTo(cam.zoom * 1.6)}>
@@ -642,7 +663,16 @@ function Garland({ g }) {
 function LoupeAt({ viewportRef, drag, item, meta }) {
   const r = viewportRef.current?.getBoundingClientRect();
   if (!r) return null;
-  return <Loupe product={item.def} meta={meta[item.def.id]} x={drag.clientX - r.left} y={drag.clientY - r.top - 64} />;
+  // 物品浮在手指上方時，放大鏡再往上放，避免蓋住物品
+  return <Loupe product={item.def} meta={meta[item.def.id]} x={drag.clientX - r.left} y={drag.clientY - r.top - (drag.lift || 12) - 52} />;
+}
+
+function AimAt({ viewportRef, drag }) {
+  const r = viewportRef.current?.getBoundingClientRect();
+  if (!r) return null;
+  const fx = drag.clientX - r.left;
+  const fy = drag.clientY - r.top;
+  return <AimLine fx={fx} fy={fy} x={fx} y={fy - drag.lift} />;
 }
 
 const box = (r) => ({ left: r.x, top: r.y, width: r.w, height: r.h });
